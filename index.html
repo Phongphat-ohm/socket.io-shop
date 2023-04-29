@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Example</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+    <!-- Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300&family=Prompt:wght@300&display=swap');
+        *{
+            font-family: 'Kanit', sans-serif;
+        }
+    </style>    
+</head>
+<body>
+    <div class="d-flex justify-content-center">
+        <div class="card w-50 mt-4">
+            <div class="card-body">
+                <h3>ฟอร์มสั่งสินค้า</h3>
+                <form onsubmit="return sendMessage()">
+                    <input placeholder="ชือเมนู" id="txt_menu"  class="form-control mb-3" autocomplete="off">
+                    <input placeholder="จำนวน" id="txt_count" class="form-control mb-3" autocomplete="off">
+                    <input placeholder="โต๊ะที่" id="txt_table" class="form-control mb-3" autocomplete="off">
+                    <button class="btn btn-success">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // connect to server
+        const socket = io();
+        
+        // send message to server
+        function sendMessage() {
+            const txt_menu = document.getElementById('txt_menu').value;
+            const txt_count = document.getElementById('txt_count').value;
+            const txt_table = document.getElementById('txt_table').value;
+
+            const message = `[x${txt_count}] - ชื่อสินค้า : ${txt_menu} - โต๊ะที่ : ${txt_table}`
+            
+            socket.emit('chat message', message);
+            return false;
+        }
+    </script>
+</body>
+</html>
